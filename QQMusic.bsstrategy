@@ -1,0 +1,30 @@
+//
+//  QQMusic.plist
+//  BeardedSpice
+//
+//  Created by Zhongnan Fang on Jun/20/18.
+//
+BSStrategy = {
+  version: 1,
+  displayName: "QQMusic",
+  accepts: {
+    method: "predicateOnTab",
+    format: "%K LIKE[c] '*https://y.qq.com/portal/player*'",
+    args: ["URL"]
+  },
+  isPlaying: function () { return document.querySelector('#btnplay').className === "btn_big_play btn_big_play--pause"; },
+  toggle: function () { document.querySelector('#btnplay').click(); },
+  previous: function () { document.getElementsByClassName("btn_big_prev")[0].click(); },
+  next: function () { document.getElementsByClassName("btn_big_next")[0].click(); },
+  pause: function () { if(document.querySelector('#btnplay').className === "btn_big_play btn_big_play--pause") {document.querySelector('#btnplay').click();} },
+  favorite: function() {document.getElementsByClassName("btn_big_like")[0].click()},
+  trackInfo: function () {
+    return {
+      'image': document.querySelector('#song_pic').getAttribute('src'),
+      'track': document.querySelector('#song_name').getElementsByTagName('a')[0].getAttribute('title'),
+      'artist': document.querySelector('#singer_name').getElementsByTagName('a')[0].getAttribute('title'),
+      'favorited': function() {document.getElementsByClassName("btn_big_like js_btn_fav btn_big_like--like") != null;},
+      'album': document.querySelector('#album_name').getElementsByTagName('a')[0].getAttribute('title'),
+    };
+  }
+}
